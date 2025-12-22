@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Augmentation API - Interactive Tester</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>Text Augmentation API</h1>
+            </div>
+            <div class="api-status">
+                <span class="status-dot" id="apiStatus"></span>
+                <span id="statusText">Checking API Status...</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel: API Tester -->
+            <div class="left-panel">
+                <div class="tabs">
+                    <button class="tab active" data-tab="enrich">Text Enrichment</button>
+                    <button class="tab" data-tab="sentiment">Sentiment Analysis</button>
+                    <button class="tab" data-tab="batch">Batch Processing</button>
+                    <button class="tab" data-tab="premium">Premium Features</button>
+                </div>
+
+                <!-- Text Enrichment Tab -->
+                <div class="tab-content active" id="enrichTab">
+                    <h2><i class="fas fa-magic"></i> Text Enrichment</h2>
+                    <p>Enhance text with sentiment analysis and intelligent synonym replacements.</p>
+                    
+                    <div class="form-group">
+                        <label for="enrichText">Enter Text:</label>
+                        <textarea id="enrichText" placeholder="Type or paste your text here...">The quick brown fox jumps over the lazy dog.</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="augmentationCount">Number of Augmentations:</label>
+                        <input type="range" id="augmentationCount" min="1" max="10" value="3">
+                        <span id="countValue">3</span>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="testEnrichText()">
+                        <i class="fas fa-play"></i> Test Enrichment
+                    </button>
+                    
+                    <div class="result" id="enrichResult">
+                        <h3>Results:</h3>
+                        <div class="result-placeholder">Click "Test Enrichment" to see results here...</div>
+                    </div>
+                </div>
+
+                <!-- Sentiment Analysis Tab -->
+                <div class="tab-content" id="sentimentTab">
+                    <h2><i class="fas fa-smile"></i> Sentiment Analysis</h2>
+                    <p>Analyze sentiment and tone of text without augmentation.</p>
+                    
+                    <div class="form-group">
+                        <label for="sentimentText">Enter Text:</label>
+                        <textarea id="sentimentText" placeholder="Type or paste your text here...">I absolutely love this amazing product! It works perfectly and makes me so happy!</textarea>
+                    </div>
+                    
+                    <div class="form-check">
+                        <input type="checkbox" id="detailedAnalysis" checked>
+                        <label for="detailedAnalysis">Detailed Analysis</label>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="testSentimentAnalysis()">
+                        <i class="fas fa-chart-bar"></i> Analyze Sentiment
+                    </button>
+                    
+                    <div class="result" id="sentimentResult">
+                        <h3>Results:</h3>
+                        <div class="result-placeholder">Click "Analyze Sentiment" to see results here...</div>
+                    </div>
+                </div>
+
+                <!-- Batch Processing Tab -->
+                <div class="tab-content" id="batchTab">
+                    <h2><i class="fas fa-layer-group"></i> Batch Processing</h2>
+                    <p>Process multiple texts simultaneously with different endpoints.</p>
+                    
+                    <div class="batch-types">
+                        <button class="btn-secondary" onclick="showBatchType('two')">Two Texts</button>
+                        <button class="btn-secondary" onclick="showBatchType('three')">Three Texts</button>
+                        <button class="btn-secondary" onclick="showBatchType('multiple')">Multiple Texts</button>
+                    </div>
+                    
+                    <div id="batchTwoForm" class="batch-form">
+                        <h4>Two Text Batch</h4>
+                        <div class="form-group">
+                            <label>Text 1:</label>
+                            <textarea class="batch-text" placeholder="First text...">This is wonderful!</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Text 2:</label>
+                            <textarea class="batch-text" placeholder="Second text...">I don't like this at all.</textarea>
+                        </div>
+                        <button class="btn-primary" onclick="testBatchTwo()">
+                            <i class="fas fa-play-circle"></i> Process Two Texts
+                        </button>
+                    </div>
+                    
+                    <div class="result" id="batchResult">
+                        <h3>Results:</h3>
+                        <div class="result-placeholder">Select a batch type and click process...</div>
+                    </div>
+                </div>
+
+                <!-- Premium Features Tab -->
+                <div class="tab-content" id="premiumTab">
+                    <h2><i class="fas fa-crown"></i> Premium Features</h2>
+                    <p>Advanced NLP features for Pro and Enterprise tiers.</p>
+                    
+                    <div class="premium-tabs">
+                        <button class="premium-tab active" onclick="showPremiumTab('summarize')">
+                            <i class="fas fa-file-contract"></i> Summarization
+                        </button>
+                        <button class="premium-tab" onclick="showPremiumTab('keywords')">
+                            <i class="fas fa-key"></i> Keyword Extraction
+                        </button>
+                    </div>
+                    
+                    <div id="summarizeForm" class="premium-form">
+                        <h4><i class="fas fa-compress-alt"></i> Text Summarization</h4>
+                        <div class="form-group">
+                            <label for="summarizeText">Enter Text to Summarize:</label>
+                            <textarea id="summarizeText" rows="6" placeholder="Enter longer text to summarize...">Natural language processing is a field of artificial intelligence that focuses on the interaction between computers and human language. It enables computers to understand, interpret, and generate human language in a valuable way. NLP combines computational linguistics with statistical, machine learning, and deep learning models. These technologies enable computers to process human language in the form of text or voice data and understand its full meaning, complete with the speakers or writers intent and sentiment.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="summarySentences">Summary Sentences:</label>
+                            <input type="range" id="summarySentences" min="1" max="5" value="2">
+                            <span id="summaryCount">2</span>
+                        </div>
+                        <button class="btn-premium" onclick="testSummarization()">
+                            <i class="fas fa-file-contract"></i> Generate Summary
+                        </button>
+                    </div>
+                    
+                    <div id="keywordsForm" class="premium-form" style="display: none;">
+                        <h4><i class="fas fa-key"></i> Keyword Extraction</h4>
+                        <div class="form-group">
+                            <label for="keywordsText">Enter Text for Keyword Extraction:</label>
+                            <textarea id="keywordsText" rows="6" placeholder="Enter text to extract keywords from...">Machine learning algorithms improve their performance as they are exposed to more data over time. Deep learning uses neural networks with multiple layers to learn representations of data with multiple levels of abstraction. Artificial intelligence is transforming industries by automating tasks and providing insights from large datasets.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="topNKeywords">Number of Keywords:</label>
+                            <input type="range" id="topNKeywords" min="1" max="15" value="8">
+                            <span id="keywordsCount">8</span>
+                        </div>
+                        <button class="btn-premium" onclick="testKeywordExtraction()">
+                            <i class="fas fa-key"></i> Extract Keywords
+                        </button>
+                    </div>
+                    
+                    <div class="result" id="premiumResult">
+                        <h3>Results:</h3>
+                        <div class="result-placeholder">Select a premium feature and test it...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: API Info & Results -->
+            <div class="right-panel">
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> API Information</h3>
+                    <div class="info-item">
+                        <span class="label">Base URL:</span>
+                        <span class="value" id="baseUrl">http://localhost:5000</span>
+                        <button class="btn-small" onclick="copyToClipboard('baseUrl')">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">API Version:</span>
+                        <span class="value">v1.0.0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Status:</span>
+                        <span class="status-badge active" id="apiStatusBadge">Active</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Response Time:</span>
+                        <span class="value" id="responseTime">-- ms</span>
+                    </div>
+                </div>
+
+                <div class="endpoints-card">
+                    <h3><i class="fas fa-code"></i> Available Endpoints</h3>
+                    <div class="endpoints-list">
+                        <div class="endpoint">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/enrich/text</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/enrich/text', 'POST')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/analyze/sentiment</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/analyze/sentiment', 'POST')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/enrich/two</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/enrich/two', 'POST')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/enrich/three</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/enrich/three', 'POST')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/enrich/batch</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/enrich/batch', 'POST')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/summarize</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/summarize', 'POST')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method post">POST</span>
+                            <span class="path">/api/v1/keywords</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/keywords', 'POST')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/api/v1/pricing</span>
+                            <button class="btn-small" onclick="copyEndpoint('/api/v1/pricing', 'GET')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="response-card">
+                    <h3><i class="fas fa-terminal"></i> Raw Response</h3>
+                    <pre id="rawResponse">{
+  "message": "Test an endpoint to see the raw JSON response here..."
+}</pre>
+                </div>
+
+                <div class="pricing-card">
+                    <h3><i class="fas fa-tags"></i> Pricing Tiers</h3>
+                    <div class="pricing-tiers">
+                        <div class="tier free">
+                            <h4>Free</h4>
+                            <p class="price">$0<span>/month</span></p>
+                            <ul>
+                                <li>100 requests/day</li>
+                                <li>Basic sentiment</li>
+                                <li>3 augmentations</li>
+                            </ul>
+                        </div>
+                        <div class="tier pro">
+                            <h4>Pro</h4>
+                            <p class="price">$29.99<span>/month</span></p>
+                            <ul>
+                                <li>10,000 requests/day</li>
+                                <li>All features</li>
+                                <li>Priority support</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="btn-secondary" onclick="window.open('/api/v1/pricing', '_blank')">
+                        <i class="fas fa-external-link-alt"></i> View All Pricing
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Text Augmentation API Tester • <a href="/api/docs/" target="_blank">Swagger Documentation</a> • <a href="https://github.com/yourusername/text-augmentation-api" target="_blank">GitHub</a></p>
+            <p class="copyright">© 2024 Text Augmentation API. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

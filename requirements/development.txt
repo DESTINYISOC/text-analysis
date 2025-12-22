@@ -1,0 +1,9 @@
+-r base.txt
+pytest==7.4.2
+pytest-flask==1.2.0
+black==23.9.1
+flake8==6.1.0
+autopep8==2.0.2
+python-dotenv==1.0.0
+setuptools>=68.0
+wheel>=0.41
